@@ -10,6 +10,10 @@
     left: 0;
 }
 
+.focusBg.active {
+    display: flex;
+}
+
 .title {
     font-family: Arial, Helvetica, sans-serif;
     color: #000000;
@@ -46,6 +50,7 @@
     padding: 8px 16px;
     content: attr(data-frame-title);
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    cursor: pointer;
 }
 
 .frame li {
@@ -118,4 +123,71 @@
     text-decoration: underline #006500;
     text-underline-offset: 5px;
     padding-right: 25px;
+}
+
+.notifTopCenter {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) scale(0.5);
+    padding: 16px 24px;
+    min-width: 200px;
+    max-height: 50px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bolder;
+    border-radius: 0px 0px 8px 8px;
+    backdrop-filter: blur(30px);
+    mask-image: radial-gradient(circle, black 10%, transparent 90%);
+
+    pointer-events: none;
+    opacity: 0;
+    transition: 0.2s cubic-bezier(0.2, 0.3, 0.3, 1.5);
+}
+
+.notifTopCenter.active {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
+
+.clcRules {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-decoration: underline #008cff;
+    text-underline-offset: 5px;
+    padding-bottom: 25px;
+}
+
+.borderFrame {
+    padding: 32px;
+    border: 2px solid #00000093;
+    border-radius: 8px;
+}
+
+
+.division_Container {
+    display: inline-flex;
+    flex-direction: column;
+    vertical-align: middle;
+    font-size: 0.85em;
+    margin: 0 0.2em;
+}
+
+.divisionNumerator {
+    border-bottom: 1.5px solid currentColor;
+    padding: 0 0.25em 0em;
+}
+
+.divisionDenominator {
+    padding: 0.25em 0.25em 0;
+}
+
+.focusBg.active + .notifTopCenter {
+    filter: invert(1) drop-shadow(0px 0px 2.5px #000000);
+    backdrop-filter: none;
+    mask-image: none;
 }

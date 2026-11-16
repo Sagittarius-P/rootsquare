@@ -1,25 +1,38 @@
 import { useState, useRef } from "react";
 import styles from "./Body.module.css";
 import "../index.css";
+import copySVG from "../assets/copy-svgrepo-com.svg";
 
 function Body() {
     const focusBg = useRef(null);
+    const notifTopCenter = useRef(null);
     let focusPropertyElement = null;
     
     function focusProperty(e) {
-        focusBg.current.style.display = 'flex';
+        focusBg.current.classList.add(styles.active);
         e.currentTarget.style.zIndex = '2';
         focusPropertyElement = e.currentTarget;
     }
 
     function unfocusProperty(e) {
         focusPropertyElement.style.zIndex = '1'
-        focusBg.current.style.display = 'none';
+        focusBg.current.classList.remove(styles.active);
+    }
+
+    function copyFrameClc(e) {
+        e.stopPropagation();
+        navigator.clipboard.writeText(e.currentTarget.textContent);
+        notifTopCenter.current.innerHTML = `<img src="${copySVG}"/><span>Copied !</span>`;
+        notifTopCenter.current.classList.add(styles.active);
+        setTimeout(() => {
+            notifTopCenter.current.classList.remove(styles.active);
+        }, 1500);
     }
 
     return (
         <>
             <div ref={focusBg} className={styles.focusBg} onClick={unfocusProperty}></div>
+            <div ref={notifTopCenter} className={`${styles.notifTopCenter} no-select`}></div>
             <div className={`${styles.title} no-select`}>
                 <span>Racines Carrées</span>
             </div>
@@ -46,11 +59,11 @@ function Body() {
                             <span className={styles.RS_Nbr}>9</span>
                         </span>
                         &nbsp;→ nous trouverons <strong>3</strong> car &nbsp;
-                        <span className={`${styles.frameCalcul} no-select`}>
+                        <span onClick={copyFrameClc} className={`${styles.frameCalcul} no-select`}>
                             3 × 3 = 9
                         </span>
                         &nbsp;Ou encore&nbsp;
-                        <span className={`${styles.frameCalcul} no-select`}>
+                        <span onClick={copyFrameClc}  className={`${styles.frameCalcul} no-select`}>
                             3² = 9
                         </span>
                     </span>
@@ -58,11 +71,11 @@ function Body() {
             </ul>
             <ul className={styles.frame} data-frame-title="Carrés parfaits" onClick={focusProperty}>
                 <li>
-                    On distingue les <strong>carrés à résultat rationnels</strong> des
+                    On distingue les <strong>carrés à résultat rationnel</strong> des
                     <strong>carrés à résultat irrationnel</strong>.
                 </li>
                 <span className={styles.logicResult}>
-                    Les carrés rationnels sont plus communément appelés <span className={styles.className}>carrés parfaits</span>.
+                    Les carrés à résultat rationnel sont plus communément appelés <span className={styles.className}>carrés parfaits</span>.
                 </span>
                 <br></br><br></br>
                 <span className={styles.exampleName}>Exemple</span>
@@ -71,7 +84,7 @@ function Body() {
                     <span className={styles.RS_Nbr}>16</span>
                 </span>
                 &nbsp;en est un  → &nbsp;
-                <span className={`${styles.frameCalcul} no-select`}>
+                <span onClick={copyFrameClc} className={`${styles.frameCalcul} no-select`}>
                     4 × 4 = 16
                 </span>
                 &nbsp;&nbsp;Mais pas &nbsp;
@@ -103,6 +116,73 @@ function Body() {
                         <span className={styles.RS_Radical}>&radic;</span>
                         <span className={styles.RS_Nbr}>𝑥 + 𝑦</span>
                     </span>
+                </li>
+                <li>
+                    <span>
+                        <span style={{ fontSize:'25px', paddingRight:'25px' }}>→</span>
+                        Mais d'autres règles de calcul très utiles, fonctionnent avec les racines carrées.
+                    </span>
+                </li>
+                <li>
+                    <ul className={styles.borderFrame}>
+                        <li>
+                            <span className={styles.clcRules}>
+                                Les voici :
+                            </span>
+                        </li>
+                        <li>
+                            •&nbsp;&nbsp;
+                            <span className={styles.RS_Container}>
+                                <span className={styles.RS_Radical}>&radic;</span>
+                                <span className={styles.RS_Nbr}>𝑥</span>
+                            </span>
+                            ×
+                            <span className={styles.RS_Container}>
+                                <span className={styles.RS_Radical}>&radic;</span>
+                                <span className={styles.RS_Nbr}>𝑦</span>
+                            </span>
+                            =
+                            <span className={styles.RS_Container}>
+                                <span className={styles.RS_Radical}>&radic;</span>
+                                <span className={styles.RS_Nbr}>𝑥 × 𝑦</span>
+                            </span>
+                        </li>
+                        <li>
+                            •&nbsp;&nbsp;
+                            <span className={styles.RS_Container}>
+                                <span className={styles.RS_Radical}>&radic;</span>
+                                <span className={styles.RS_Nbr}>
+                                    <span className={styles.division_Container}>
+                                        <span className={styles.divisionNumerator}>𝑥</span>
+                                        <span className={styles.divisionDenominator}>𝑦</span>
+                                    </span>
+                                </span>
+                            </span>
+                            =
+                            <span className={styles.division_Container}>
+                                <span className={styles.divisionNumerator}>
+                                    <span className={styles.RS_Container}>
+                                        <span className={styles.RS_Radical}>&radic;</span>
+                                        <span className={styles.RS_Nbr}>𝑥</span>
+                                    </span>
+                                </span>
+                                <span className={styles.divisionDenominator}>
+                                    <span className={styles.RS_Container}>
+                                        <span className={styles.RS_Radical}>&radic;</span>
+                                        <span className={styles.RS_Nbr}>𝑦</span>
+                                    </span>
+                                </span>
+                            </span>
+                        </li>
+                        <li>
+                            •&nbsp;&nbsp;
+                            (<span className={styles.RS_Container}>
+                                <span className={styles.RS_Radical}>&radic;</span>
+                                <span className={styles.RS_Nbr}>𝑥</span>
+                            </span>)²
+                            = 𝑥
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </>
