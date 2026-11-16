@@ -1,0 +1,10 @@
+.no-select {
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+body {
+    margin: 0;
+}
